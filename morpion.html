@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morpion — Les Trois Mousquetaires</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Applique le thème avant l'affichage pour éviter un flash
+    try {
+      const theme = localStorage.getItem("theme") ||
+        (matchMedia("(prefers-color-scheme: light)").matches ? "clair" : "sombre");
+      document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
+</head>
+<body>
+  <button id="bouton-theme" class="bouton-theme" aria-label="Changer de thème"></button>
+  <header>
+    <h1>⚔️ Les Trois Mousquetaires ⚔️</h1>
+    <p class="devise">Un pour tous, tous pour un !</p>
+    <nav class="jeux">
+      <a href="index.html">🚂 Le train</a>
+      <a href="morpion.html" aria-current="page">✕◯ Morpion</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="modes" role="group" aria-label="Adversaire">
+      <button data-mode="ordi" aria-pressed="true">Contre l'ordi</button>
+      <button data-mode="duo" aria-pressed="false">À deux</button>
+    </div>
+
+    <div class="scores">
+      <span><span id="nom-x">Toi</span> (✕) : <strong id="score-x">0</strong></span>
+      <span>Nuls : <strong id="score-nuls">0</strong></span>
+      <span><span id="nom-o">Ordi</span> (◯) : <strong id="score-o">0</strong></span>
+    </div>
+
+    <div class="plateau">
+      <div id="grille" class="grille"></div>
+      <div id="message" class="message cache">
+        <p id="message-texte"></p>
+        <button id="rejouer">Rejouer</button>
+      </div>
+    </div>
+
+    <p id="tour" class="tour" aria-live="polite"></p>
+    <p class="aide">Clique sur une case, ou utilise les touches 1 à 9 du pavé numérique.</p>
+  </main>
+
+  <footer>
+    <p>Les Trois Mousquetaires — 2026</p>
+  </footer>
+
+  <script src="morpion.js"></script>
+</body>
+</html>
