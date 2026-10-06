@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Trois Mousquetaires</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⚔️ Les Trois Mousquetaires ⚔️</h1>
+    <p class="devise">Un pour tous, tous pour un !</p>
+  </header>
+
+  <main>
+    <div class="scores">
+      <span>Score : <strong id="score">0</strong></span>
+      <span>Record : <strong id="record">0</strong></span>
+    </div>
+
+    <div class="plateau">
+      <canvas id="jeu" width="400" height="400"></canvas>
+      <div id="message" class="message">
+        <p id="message-texte">Appuie sur Espace ou sur Jouer</p>
+        <button id="jouer">Jouer</button>
+      </div>
+    </div>
+
+    <div class="manette">
+      <button data-dir="haut" aria-label="Haut">▲</button>
+      <div>
+        <button data-dir="gauche" aria-label="Gauche">◀</button>
+        <button data-dir="bas" aria-label="Bas">▼</button>
+        <button data-dir="droite" aria-label="Droite">▶</button>
+      </div>
+    </div>
+
+    <p class="aide">Flèches du clavier ou ZQSD pour diriger le serpent. Espace pour pause.</p>
+  </main>
+
+  <footer>
+    <p>Les Trois Mousquetaires — 2026</p>
+  </footer>
+
+  <script src="snake.js"></script>
+</body>
+</html>
