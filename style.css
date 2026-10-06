@@ -9,6 +9,7 @@
   --voile: rgba(27, 31, 58, 0.75);
   --pomme: #e0453a;
   --texte-bouton: #1b1f3a;
+  --roues: #0e1024;
 }
 
 /* Thème clair */
@@ -22,6 +23,7 @@
   --voile: rgba(246, 239, 220, 0.8);
   --pomme: #c8322a;
   --texte-bouton: #fffaee;
+  --roues: #3a3350;
 }
 
 * {

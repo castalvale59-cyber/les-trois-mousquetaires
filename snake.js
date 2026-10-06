@@ -39,6 +39,7 @@ function lireCouleurs() {
     pomme: v("--pomme"),
     or: v("--or"),
     orClair: v("--or-clair"),
+    roues: v("--roues"),
   };
 }
 
@@ -113,7 +114,7 @@ function tour() {
     score++;
     scoreEl.textContent = score;
     placerPomme();
-    // Le serpent accélère un peu à chaque pomme
+    // Le train accélère un peu à chaque pomme
     if (vitesse > 60) {
       vitesse -= 4;
       relancerMinuteur();
@@ -172,11 +173,83 @@ function dessiner() {
   );
   ctx.fill();
 
-  // Serpent
+  // Train : attelages, puis wagons (de la queue vers l'avant), puis locomotive
+  ctx.strokeStyle = couleurs.roues;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
   serpent.forEach((c, i) => {
-    ctx.fillStyle = i === 0 ? couleurs.orClair : couleurs.or;
-    ctx.fillRect(c.x * TAILLE + 1, c.y * TAILLE + 1, TAILLE - 2, TAILLE - 2);
+    const px = c.x * TAILLE + TAILLE / 2;
+    const py = c.y * TAILLE + TAILLE / 2;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
   });
+  ctx.stroke();
+
+  for (let i = serpent.length - 1; i >= 0; i--) {
+    const c = serpent[i];
+    const avant = i === 0 ? null : serpent[i - 1];
+    let angle;
+    if (avant) angle = Math.atan2(avant.y - c.y, avant.x - c.x);
+    else if (serpent[1]) angle = Math.atan2(c.y - serpent[1].y, c.x - serpent[1].x);
+    else angle = Math.atan2(direction.y, direction.x);
+
+    ctx.save();
+    ctx.translate(c.x * TAILLE + TAILLE / 2, c.y * TAILLE + TAILLE / 2);
+    ctx.rotate(angle);
+    if (i === 0) dessinerLocomotive();
+    else dessinerWagon();
+    ctx.restore();
+  }
+}
+
+// Dessins à l'échelle d'une case de 20 px, l'avant du véhicule vers la droite
+function rectArrondi(x, y, l, h, r) {
+  ctx.beginPath();
+  if (ctx.roundRect) ctx.roundRect(x, y, l, h, r);
+  else ctx.rect(x, y, l, h);
+  ctx.fill();
+}
+
+function dessinerRoues() {
+  ctx.fillStyle = couleurs.roues;
+  ctx.fillRect(-7, -9, 5, 3);
+  ctx.fillRect(2, -9, 5, 3);
+  ctx.fillRect(-7, 6, 5, 3);
+  ctx.fillRect(2, 6, 5, 3);
+}
+
+function dessinerLocomotive() {
+  dessinerRoues();
+  // Chasse-pierres rouge à l'avant
+  ctx.fillStyle = couleurs.pomme;
+  ctx.beginPath();
+  ctx.moveTo(6, -6);
+  ctx.lineTo(10, 0);
+  ctx.lineTo(6, 6);
+  ctx.fill();
+  // Chaudière
+  ctx.fillStyle = couleurs.orClair;
+  rectArrondi(-9, -7, 16, 14, 3);
+  // Cabine du conducteur à l'arrière
+  ctx.fillStyle = couleurs.or;
+  ctx.fillRect(-9, -7, 6, 14);
+  ctx.fillStyle = couleurs.plateau;
+  ctx.fillRect(-8, -4, 4, 8);
+  // Cheminée
+  ctx.fillStyle = couleurs.roues;
+  ctx.beginPath();
+  ctx.arc(3, 0, 2.5, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function dessinerWagon() {
+  dessinerRoues();
+  ctx.fillStyle = couleurs.or;
+  rectArrondi(-8, -6, 16, 12, 2);
+  // Fenêtres
+  ctx.fillStyle = couleurs.plateau;
+  ctx.fillRect(-5, -3, 4, 6);
+  ctx.fillRect(1, -3, 4, 6);
 }
 
 function changerDirection(nom) {
