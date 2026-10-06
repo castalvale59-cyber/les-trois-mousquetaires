@@ -1,0 +1,333 @@
+/* Styles propres au jeu de tir (index.html), chargés après style.css */
+/* Thème sombre (par défaut) : la nuit tombe sur le château */
+:root {
+  color-scheme: dark;
+  --fond: #1b1f3a;
+  --texte: #f4e9cd;
+  --or: #e8c547;
+  --or-clair: #f5d76a;
+  --voile: rgba(27, 31, 58, 0.82);
+  --rouge: #e0453a;
+  --texte-bouton: #1b1f3a;
+}
+
+/* Thème clair : en plein jour */
+:root[data-theme="clair"] {
+  color-scheme: light;
+  --fond: #f6efdc;
+  --texte: #2a2440;
+  --or: #a87b00;
+  --or-clair: #c9970f;
+  --voile: rgba(246, 239, 220, 0.88);
+  --rouge: #c8322a;
+  --texte-bouton: #fffaee;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--fond);
+  color: var(--texte);
+}
+
+#jeu {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cache {
+  display: none !important;
+}
+
+/* ---------- Écran d'accueil / pause / fin ---------- */
+
+.ecran {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.carte {
+  width: 100%;
+  max-width: 480px;
+  padding: 28px 24px;
+  border: 3px solid var(--or);
+  border-radius: 12px;
+  background: var(--voile);
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+h1 {
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  color: var(--or);
+}
+
+.devise {
+  font-style: italic;
+  margin-top: 6px;
+  opacity: 0.8;
+}
+
+#ecran-texte {
+  margin: 18px 0;
+  font-size: 1.1rem;
+}
+
+button {
+  font-family: inherit;
+  font-size: 1.1rem;
+  background: var(--or);
+  color: var(--texte-bouton);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 28px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--or-clair);
+}
+
+.commandes {
+  list-style: none;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  line-height: 1.9;
+  opacity: 0.9;
+}
+
+kbd {
+  font-family: inherit;
+  font-size: 0.8rem;
+  padding: 1px 6px;
+  border: 1px solid var(--or);
+  border-radius: 4px;
+}
+
+.record {
+  margin-top: 14px;
+}
+
+.record strong {
+  color: var(--or);
+}
+
+.info-mobile {
+  display: none;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--rouge);
+}
+
+@media (pointer: coarse) {
+  .info-mobile {
+    display: block;
+  }
+}
+
+/* ---------- Bouton jour / nuit ---------- */
+
+.bouton-theme {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 1.3rem;
+  border-radius: 50%;
+  background: var(--voile);
+  border: 2px solid var(--or);
+  z-index: 10;
+}
+
+.bouton-theme:hover {
+  background: var(--voile);
+  transform: scale(1.08);
+}
+
+/* ---------- Interface en jeu ---------- */
+
+.hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  color: #f4e9cd;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.hud strong {
+  color: #e8c547;
+}
+
+.viseur {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  box-shadow: 0 0 2px #000;
+}
+
+.viseur::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  margin: -1.5px 0 0 -1.5px;
+  background: #fff;
+  border-radius: 50%;
+}
+
+/* Petite croix quand un tir touche */
+.touche {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  margin: -17px 0 0 -17px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.touche::before,
+.touche::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  margin-top: -1.5px;
+  background: #fff;
+  transform: rotate(45deg);
+}
+
+.touche::after {
+  transform: rotate(-45deg);
+}
+
+.touche.visible {
+  opacity: 1;
+  transition: none;
+}
+
+.touche.tete::before,
+.touche.tete::after {
+  background: #e0453a;
+}
+
+.hud-haut {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 70px;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  font-size: 1.15rem;
+}
+
+.annonce {
+  position: absolute;
+  top: 28%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: clamp(1.6rem, 5vw, 2.8rem);
+  color: #e8c547;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.annonce.visible {
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.hud-bas {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.vie,
+.arme {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.1rem;
+}
+
+.arme {
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.barre {
+  width: 200px;
+  height: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.6);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+#barre-vie {
+  height: 100%;
+  width: 100%;
+  background: #c8322a;
+  transition: width 0.2s;
+}
+
+#barre-arme {
+  height: 100%;
+  width: 100%;
+  background: #e8c547;
+}
+
+/* Bords rouges quand on est touché */
+.degats {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 160px 40px rgba(200, 20, 20, 0.85);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.degats.visible {
+  opacity: 1;
+  transition: none;
+}

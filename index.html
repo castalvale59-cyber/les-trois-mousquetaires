@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Les Trois Mousquetaires</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="jeu.css">
   <script>
     // Applique le thème avant l'affichage pour éviter un flash
     try {
@@ -13,48 +14,62 @@
       document.documentElement.dataset.theme = theme;
     } catch (e) {}
   </script>
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+  </script>
 </head>
 <body>
+  <canvas id="jeu"></canvas>
+
+  <div id="degats" class="degats"></div>
+
+  <div id="hud" class="hud cache">
+    <div class="viseur"></div>
+    <div id="touche" class="touche"></div>
+    <div class="hud-haut">
+      <span>Vague <strong id="vague">1</strong></span>
+      <span>Gardes restants <strong id="restants">0</strong></span>
+      <span>Score <strong id="score">0</strong></span>
+    </div>
+    <div id="annonce" class="annonce"></div>
+    <div class="hud-bas">
+      <div class="vie">
+        <span>❤</span>
+        <div class="barre"><div id="barre-vie"></div></div>
+        <strong id="vie">100</strong>
+      </div>
+      <div class="arme">
+        <span id="etat-arme">Mousquet chargé</span>
+        <div class="barre"><div id="barre-arme"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ecran" class="ecran">
+    <div class="carte">
+      <h1>⚔️ Les Trois Mousquetaires ⚔️</h1>
+      <p class="devise">Un pour tous, tous pour un !</p>
+      <nav class="jeux">
+        <a href="index.html" aria-current="page">🎯 Jeu de tir</a>
+        <a href="morpion.html">✕◯ Morpion</a>
+      </nav>
+      <p id="ecran-texte">Défends la cour du château contre les gardes du Cardinal.</p>
+      <button id="jouer">Jouer</button>
+      <ul class="commandes">
+        <li><kbd>Souris</kbd> viser</li>
+        <li><kbd>Clic gauche</kbd> tirer au mousquet</li>
+        <li><kbd>Clic droit</kbd> ou <kbd>F</kbd> coup de baïonnette</li>
+        <li><kbd>ZQSD</kbd> / <kbd>WASD</kbd> se déplacer</li>
+        <li><kbd>Maj</kbd> courir · <kbd>Espace</kbd> sauter</li>
+        <li><kbd>Échap</kbd> pause</li>
+      </ul>
+      <p class="record">Record : <strong id="record">0</strong></p>
+      <p class="info-mobile">Ce jeu se joue sur ordinateur, avec un clavier et une souris.</p>
+    </div>
+  </div>
+
   <button id="bouton-theme" class="bouton-theme" aria-label="Changer de thème"></button>
-  <header>
-    <h1>⚔️ Les Trois Mousquetaires ⚔️</h1>
-    <p class="devise">Un pour tous, tous pour un !</p>
-    <nav class="jeux">
-      <a href="index.html" aria-current="page">🚂 Le train</a>
-      <a href="morpion.html">✕◯ Morpion</a>
-    </nav>
-  </header>
 
-  <main>
-    <div class="scores">
-      <span>Score : <strong id="score">0</strong></span>
-      <span>Record : <strong id="record">0</strong></span>
-    </div>
-
-    <div class="plateau">
-      <canvas id="jeu" width="400" height="400"></canvas>
-      <div id="message" class="message">
-        <p id="message-texte">Appuie sur Espace ou sur Jouer</p>
-        <button id="jouer">Jouer</button>
-      </div>
-    </div>
-
-    <div class="manette">
-      <button data-dir="haut" aria-label="Haut">▲</button>
-      <div>
-        <button data-dir="gauche" aria-label="Gauche">◀</button>
-        <button data-dir="bas" aria-label="Bas">▼</button>
-        <button data-dir="droite" aria-label="Droite">▶</button>
-      </div>
-    </div>
-
-    <p class="aide">Flèches du clavier ou ZQSD pour diriger le train. Espace pour pause.</p>
-  </main>
-
-  <footer>
-    <p>Les Trois Mousquetaires — 2026</p>
-  </footer>
-
-  <script src="snake.js"></script>
+  <script type="module" src="jeu.js"></script>
 </body>
 </html>
