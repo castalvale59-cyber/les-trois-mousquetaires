@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mini-golf — Les Trois Mousquetaires</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="golf.css">
+  <script>
+    // Applique le thème avant l'affichage pour éviter un flash
+    try {
+      const theme = localStorage.getItem("theme") ||
+        (matchMedia("(prefers-color-scheme: light)").matches ? "clair" : "sombre");
+      document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
+</head>
+<body class="page-golf">
+  <button id="bouton-theme" class="bouton-theme" aria-label="Changer de thème"></button>
+  <header>
+    <h1>⚔️ Les Trois Mousquetaires ⚔️</h1>
+    <p class="devise">Un pour tous, tous pour un !</p>
+    <nav class="jeux">
+      <a href="index.html">🎯 Jeu de tir</a>
+      <a href="morpion.html">✕◯ Morpion</a>
+      <a href="bataille.html">🌀 Bataille royale</a>
+      <a href="golf.html" aria-current="page">⛳ Mini-golf</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="barre-golf">
+      <div id="panneau-0" class="panneau j0">
+        <span class="pastille"></span>
+        <div>
+          <strong class="nom">Toi</strong>
+          <span class="detail">Coups : <b class="coups">0</b> · Total : <b class="total">0</b></span>
+          <span class="effets"></span>
+        </div>
+      </div>
+      <div class="infos-trou">
+        <strong id="trou-numero">Trou 1</strong>
+        <span id="trou-nom">—</span>
+        <span id="trou-par">Par 2</span>
+      </div>
+      <div id="panneau-1" class="panneau j1">
+        <span class="pastille"></span>
+        <div>
+          <strong class="nom">Ordi</strong>
+          <span class="detail">Coups : <b class="coups">0</b> · Total : <b class="total">0</b></span>
+          <span class="effets"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="terrain">
+      <canvas id="golf"></canvas>
+      <div id="bandeau" class="bandeau"></div>
+
+      <div id="menu-golf" class="voile-golf">
+        <div class="fiche">
+          <h2>⛳ Mini-golf</h2>
+          <p>Glisse en arrière pour viser, relâche pour taper. Ramasse les boîtes <b>?</b> pour gagner des atouts !</p>
+          <div class="choix" role="group" aria-label="Adversaire">
+            <button data-mode="ordi" aria-pressed="true">🤖 Contre l'ordi</button>
+            <button data-mode="deux" aria-pressed="false">👥 À deux</button>
+          </div>
+          <div class="choix" role="group" aria-label="Parcours">
+            <button data-parcours="debut" aria-pressed="true">Trous 1 à 10</button>
+            <button data-parcours="fin" aria-pressed="false">Trous 11 à 20</button>
+            <button data-parcours="tout" aria-pressed="false">Les 20 trous</button>
+          </div>
+          <button id="commencer" class="gros">C'est parti !</button>
+        </div>
+      </div>
+
+      <div id="carte-score" class="voile-golf cache">
+        <div class="fiche">
+          <h2 id="score-titre">Trou terminé</h2>
+          <div id="score-contenu"></div>
+          <button id="score-suite" class="gros">Trou suivant</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="atouts">
+      <span id="atouts-titre">Tes atouts :</span>
+      <div id="atouts-liste" class="atouts-liste"></div>
+    </div>
+    <p id="atout-aide" class="aide">Glisse en arrière depuis n'importe où sur le terrain, puis relâche. Plus tu tires loin, plus c'est fort.</p>
+  </main>
+
+  <footer>
+    <p>Les Trois Mousquetaires — 2026</p>
+  </footer>
+
+  <script src="golf.js"></script>
+</body>
+</html>

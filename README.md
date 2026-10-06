@@ -48,3 +48,19 @@ Page `bataille.html` : 16 mousquetaires sur une grande carte, le dernier debout 
 - Ouvre les coffres 📦 pour trouver munitions, bois, vie et bouclier
 - Reste dans le cercle : la tempête 🌀 se referme et fait des dégâts
 - Sur mobile : garde le doigt sur le plateau pour avancer, le tir est automatique
+
+## Mini-golf
+
+Page `golf.html` (lien « Mini-golf » dans le menu du site), à la façon de Plato.
+
+- Contre l'ordi ou à deux sur le même écran, chacun son tour
+- Glisse en arrière depuis n'importe où sur le terrain puis relâche : plus tu tires loin, plus c'est fort (souris ou doigt)
+- 20 trous dans 6 mondes (prairie, désert, neige, volcan, bonbon, nuit) : eau et lave, sable, glace, bumpers, moulins, tapis accélérateurs, téléporteurs
+- Parcours de 10 trous (1 à 10 ou 11 à 20) ou les 20 d'affilée
+- Les boîtes **?** donnent des atouts (3 au maximum) à utiliser avant de tirer :
+  - 🔄 Inversion : les commandes de l'adversaire sont inversées à son prochain coup
+  - 🟤 Boue : une flaque de boue sur le chemin de sa balle, qui la freine
+  - 💨 Rafale : un coup de vent pendant son prochain tir
+  - 🪶 Bras mou : son prochain coup est deux fois moins fort
+  - 🔀 Échange : tu échanges ta balle avec la sienne
+  - 🧲 Aimant : ton prochain coup est attiré par le trou
