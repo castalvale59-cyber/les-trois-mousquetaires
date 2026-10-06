@@ -27,6 +27,40 @@ try {
 } catch (e) {}
 recordEl.textContent = record;
 
+// Thème clair / sombre
+const boutonTheme = document.getElementById("bouton-theme");
+let couleurs;
+
+function lireCouleurs() {
+  const style = getComputedStyle(document.documentElement);
+  const v = (nom) => style.getPropertyValue(nom).trim();
+  couleurs = {
+    plateau: v("--plateau"),
+    pomme: v("--pomme"),
+    or: v("--or"),
+    orClair: v("--or-clair"),
+  };
+}
+
+function appliquerTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  boutonTheme.textContent = theme === "clair" ? "🌙" : "☀️";
+  boutonTheme.title = theme === "clair" ? "Passer en mode sombre" : "Passer en mode clair";
+  lireCouleurs();
+}
+
+boutonTheme.addEventListener("click", () => {
+  const theme = document.documentElement.dataset.theme === "clair" ? "sombre" : "clair";
+  try {
+    localStorage.setItem("theme", theme);
+  } catch (e) {}
+  appliquerTheme(theme);
+  dessiner();
+  boutonTheme.blur(); // pour que la touche Espace ne rebascule pas le thème
+});
+
+appliquerTheme(document.documentElement.dataset.theme || "sombre");
+
 function nouvellePartie() {
   serpent = [
     { x: 10, y: 10 },
@@ -123,11 +157,11 @@ function basculerPause() {
 }
 
 function dessiner() {
-  ctx.fillStyle = "#263061";
+  ctx.fillStyle = couleurs.plateau;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Pomme
-  ctx.fillStyle = "#e0453a";
+  ctx.fillStyle = couleurs.pomme;
   ctx.beginPath();
   ctx.arc(
     pomme.x * TAILLE + TAILLE / 2,
@@ -140,7 +174,7 @@ function dessiner() {
 
   // Serpent
   serpent.forEach((c, i) => {
-    ctx.fillStyle = i === 0 ? "#f5d76a" : "#e8c547";
+    ctx.fillStyle = i === 0 ? couleurs.orClair : couleurs.or;
     ctx.fillRect(c.x * TAILLE + 1, c.y * TAILLE + 1, TAILLE - 2, TAILLE - 2);
   });
 }

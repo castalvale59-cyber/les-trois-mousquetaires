@@ -5,8 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Les Trois Mousquetaires</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Applique le thème avant l'affichage pour éviter un flash
+    try {
+      const theme = localStorage.getItem("theme") ||
+        (matchMedia("(prefers-color-scheme: light)").matches ? "clair" : "sombre");
+      document.documentElement.dataset.theme = theme;
+    } catch (e) {}
+  </script>
 </head>
 <body>
+  <button id="bouton-theme" class="bouton-theme" aria-label="Changer de thème"></button>
   <header>
     <h1>⚔️ Les Trois Mousquetaires ⚔️</h1>
     <p class="devise">Un pour tous, tous pour un !</p>
