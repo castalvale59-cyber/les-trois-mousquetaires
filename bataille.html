@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Les Trois Mousquetaires</title>
+  <title>Bataille royale — Les Trois Mousquetaires</title>
   <link rel="stylesheet" href="style.css">
   <script>
     // Applique le thème avant l'affichage pour éviter un flash
@@ -20,42 +20,41 @@
     <h1>⚔️ Les Trois Mousquetaires ⚔️</h1>
     <p class="devise">Un pour tous, tous pour un !</p>
     <nav class="jeux">
-      <a href="index.html" aria-current="page">🚂 Le train</a>
+      <a href="index.html">🚂 Le train</a>
       <a href="morpion.html">✕◯ Morpion</a>
-      <a href="bataille.html">🌀 Bataille royale</a>
+      <a href="bataille.html" aria-current="page">🌀 Bataille royale</a>
     </nav>
   </header>
 
-  <main>
+  <main class="large bataille">
     <div class="scores">
-      <span>Score : <strong id="score">0</strong></span>
-      <span>Record : <strong id="record">0</strong></span>
+      <span>Éliminations : <strong id="eliminations">0</strong></span>
+      <span>Meilleur classement : <strong id="record">—</strong></span>
     </div>
 
     <div class="plateau">
-      <canvas id="jeu" width="400" height="400"></canvas>
+      <canvas id="jeu" width="600" height="600"></canvas>
       <div id="message" class="message">
-        <p id="message-texte">Appuie sur Espace ou sur Jouer</p>
+        <p id="message-texte">16 mousquetaires, une tempête… un seul vainqueur !</p>
         <button id="jouer">Jouer</button>
       </div>
     </div>
 
     <div class="manette">
-      <button data-dir="haut" aria-label="Haut">▲</button>
-      <div>
-        <button data-dir="gauche" aria-label="Gauche">◀</button>
-        <button data-dir="bas" aria-label="Bas">▼</button>
-        <button data-dir="droite" aria-label="Droite">▶</button>
-      </div>
+      <button id="construire" aria-label="Construire un mur">🧱</button>
     </div>
 
-    <p class="aide">Flèches du clavier ou ZQSD pour diriger le train. Espace pour pause.</p>
+    <p class="aide">
+      ZQSD / WASD ou flèches pour bouger, souris pour viser, clic gauche pour tirer,
+      clic droit ou E pour construire un mur (10 bois). Ouvre les coffres 📦, reste dans la zone. P pour pause.
+      Sur mobile : garde le doigt sur le plateau pour avancer, ton mousquetaire tire tout seul.
+    </p>
   </main>
 
   <footer>
     <p>Les Trois Mousquetaires — 2026</p>
   </footer>
 
-  <script src="snake.js"></script>
+  <script src="bataille.js"></script>
 </body>
 </html>

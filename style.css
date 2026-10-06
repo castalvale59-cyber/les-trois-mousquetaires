@@ -167,9 +167,20 @@ button:hover {
   opacity: 0.7;
 }
 
+/* Bataille royale */
+main.large {
+  max-width: 640px;
+}
+
+.bataille canvas {
+  cursor: crosshair;
+  touch-action: none;
+}
+
 /* Menu des jeux */
 .jeux {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
   margin-top: 14px;
