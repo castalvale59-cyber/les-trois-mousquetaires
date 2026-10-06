@@ -117,6 +117,13 @@ function textureMoellons(base, joint, colonnes, lignes, repetition) {
   return t;
 }
 
+// Photo du visage collée sur la tête des gardes
+function chargerVisage() {
+  const t = new THREE.TextureLoader().load("visage.jpg");
+  t.colorSpace = THREE.SRGBColorSpace;
+  return t;
+}
+
 // ---------- Matériaux ----------
 
 const mat = {
@@ -138,7 +145,9 @@ const mat = {
   blanc: new THREE.MeshStandardMaterial({ color: 0xf2f2f2, roughness: 0.8 }),
   culotte: new THREE.MeshStandardMaterial({ color: 0x2b2b33, roughness: 0.9 }),
   bottes: new THREE.MeshStandardMaterial({ color: 0x1a120c, roughness: 0.7 }),
-  peau: new THREE.MeshStandardMaterial({ color: 0xe0b48c, roughness: 0.8 }),
+  peau: new THREE.MeshStandardMaterial({ color: 0xc99a7e, roughness: 0.8 }),
+  cheveux: new THREE.MeshStandardMaterial({ color: 0x3b2a1e, roughness: 1 }),
+  visage: new THREE.MeshStandardMaterial({ map: chargerVisage(), roughness: 0.8 }),
   chapeau: new THREE.MeshStandardMaterial({ color: 0x141414, roughness: 0.9 }),
 };
 
@@ -338,7 +347,7 @@ const geo = {
   croixV: new THREE.BoxGeometry(0.07, 0.4, 0.01),
   croixH: new THREE.BoxGeometry(0.3, 0.07, 0.01),
   bras: new THREE.BoxGeometry(0.14, 0.62, 0.14),
-  tete: new THREE.SphereGeometry(0.17, 12, 10),
+  tete: new THREE.BoxGeometry(0.32, 0.44, 0.32),
   bord: new THREE.CylinderGeometry(0.32, 0.32, 0.04, 16),
   calotte: new THREE.CylinderGeometry(0.15, 0.17, 0.18, 12),
   plume: new THREE.BoxGeometry(0.04, 0.04, 0.4),
@@ -379,10 +388,11 @@ function creerGarde(type) {
   piece(geo.bras, tunique, 0, -0.29, 0, epauleG);
   piece(geo.bras, tunique, 0, -0.29, 0, epauleD);
 
-  const tete = piece(geo.tete, mat.peau, 0, 1.7, 0);
-  const bord = piece(geo.bord, mat.chapeau, 0, 1.84, 0);
-  const calotte = piece(geo.calotte, mat.chapeau, 0, 1.94, 0);
-  const plume = piece(geo.plume, type === "capitaine" ? mat.or : mat.tunique, 0.12, 1.98, -0.12);
+  // Ordre des faces : droite, gauche, dessus, dessous, avant (le visage), arrière
+  const tete = piece(geo.tete, [mat.peau, mat.peau, mat.cheveux, mat.peau, mat.visage, mat.cheveux], 0, 1.74, 0);
+  const bord = piece(geo.bord, mat.chapeau, 0, 1.97, 0);
+  const calotte = piece(geo.calotte, mat.chapeau, 0, 2.07, 0);
+  const plume = piece(geo.plume, type === "capitaine" ? mat.or : mat.tunique, 0.12, 2.11, -0.12);
   plume.rotation.x = 0.5;
   for (const m of [tete, bord, calotte, plume]) m.userData.tete = true;
 
